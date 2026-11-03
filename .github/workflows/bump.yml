@@ -1,0 +1,33 @@
+name: Follow Meluli releases
+# Moves the cask to the newest Meluli release with a DMG. It writes only to this repository.
+on:
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: bump
+  cancel-in-progress: false
+jobs:
+  bump:
+    runs-on: macos-15
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Point the cask at the newest release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: scripts/bump.sh
+      - name: Check and commit a new version
+        run: |
+          git diff --quiet && exit 0
+          brew tap-new --no-git local/check >/dev/null
+          mkdir -p "$(brew --repository local/check)/Casks"
+          cp Casks/meluli.rb "$(brew --repository local/check)/Casks/"
+          brew style --cask local/check/meluli
+          brew audit --cask --online local/check/meluli
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "meluli $(sed -nE 's/^  version "(.*)"$/\1/p' Casks/meluli.rb)"
+          git push
