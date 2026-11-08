@@ -23,6 +23,8 @@ jobs:
         run: |
           git diff --quiet && exit 0
           brew tap-new --no-git local/check >/dev/null
+          # Homebrew 7 loads casks only from trusted taps.
+          brew trust --tap local/check
           mkdir -p "$(brew --repository local/check)/Casks"
           cp Casks/meluli.rb "$(brew --repository local/check)/Casks/"
           brew style --cask local/check/meluli
