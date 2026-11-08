@@ -7,7 +7,7 @@ cask "meluli" do
   desc "Hebrew dictation and transcription that runs locally"
   homepage "https://github.com/rashi123123/meluli"
 
-  # Every release so far is a prerelease, which the default strategy skips.
+  # Covers prereleases too, which the default strategy skips.
   livecheck do
     url :url
     regex(/^v?(\d+(?:\.\d+)+(?:-[\w.]+)?)$/i)
@@ -35,5 +35,6 @@ cask "meluli" do
     "~/Library/Logs/Meluli",
     "~/Library/Preferences/io.github.rashi123123.meluli.plist",
     "~/Library/Saved Application State/io.github.rashi123123.meluli.savedState",
+    "~/Library/WebKit/io.github.rashi123123.meluli",
   ]
 end
