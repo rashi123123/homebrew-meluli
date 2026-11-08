@@ -1,6 +1,6 @@
 cask "meluli" do
-  version "0.1.0-preview.3"
-  sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+  version "0.2.0"
+  sha256 "09e3626bc0e36437ed23a21d52546e7afe2c1e2b5418e2c495c1a890a12b2a94"
 
   url "https://github.com/rashi123123/meluli/releases/download/v#{version}/Meluli-#{version}-arm64.dmg"
   name "Meluli"
